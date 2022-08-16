@@ -7,10 +7,17 @@
 <body>
 <h1> order a pizza here</h1>
 <h3>{{ note }}</h3>
-<form action="{% url 'order' %}" method="POST">
+<form  action="{% url 'order' %}" method="POST">
     {% csrf_token %}
     {{ pizzaForm }}
     <input type="submit" value="order">
+</form>
+<br><br>
+want more than one pizza?
+<form action="{% url 'pizzas' %}" method = "GET">
+    {{ multiple_form }}
+    <input type="submit" value="get pizzas">
+
 </form>
 
 </body>
