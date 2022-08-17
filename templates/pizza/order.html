@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1> order a pizza here</h1>
+{% extends 'pizza/base.html' %}
+{% block content %}
+  {% load widget_tweaks %}
+  <div class="container">
+  <h1> order a pizza here</h1>
 <h3>{{ note }}</h3>
 {% if created_pizza_pk %}
 <a href="{% url 'edit_order' created_pizza_pk %}">Edit your order</a>
 {% endif %}
 <form  action="{% url 'order' %}" method="POST">
     {% csrf_token %}
-    {{ pizzaForm }}
+    {%for field in pizzaForm %}
+        <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {% render_field field class="form-control" %}
+        </div>
+    {% endfor %}
+
     <input type="submit" value="order">
 </form>
 <br><br>
@@ -22,6 +26,9 @@ want more than one pizza?
     <input type="submit" value="get pizzas">
 
 </form>
+  </div>
+{% endblock %}
 
-</body>
-</html>
+
+
+ 

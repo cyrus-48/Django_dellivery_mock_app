@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit order</title>
-</head>
-<body>
-<h1> Edit order</h1>
-<h2> {{ note }}</h2>
+ {% extends 'pizza/base.html' %}
+ {% block content %}
+<h3> Edit order</h3>
+<h4 class="alert-success"> {{ note }}</h4>
 <form action = "{% url 'edit_order' pizza.id %}" method = "POST">
     {% csrf_token %}
     {{ pizzaform }}
     <input type="submit" value="Edit order">
 </form>
+ {% endblock %}
 
-</body>
-</html>

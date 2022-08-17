@@ -1,3 +1,5 @@
+{% extends 'pizza/base.html' %}
+{% block content %}
 <h1> order multipple pizza </h1>
 <h1> {{  note }}</h1>
 <form action="{% url 'pizzas' %}" method="POST">
@@ -9,3 +11,4 @@
     {% endfor %}
 <input type="submit" value="get pizzas">
 </form>
+{% endblock%}
