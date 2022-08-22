@@ -15,6 +15,25 @@
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'order' %}">Order Pizza</a>
           </li>
+             <li class="nav-item active">
+            <a class="nav-link" href="{% url 'orders' %}">Total orders</a>
+          </li>
+        </ul>
+           <ul class="navbar-nav" style="align-self: end">
+                {% if user.is_authenticated %}
+               <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'logout' %}">Hello , {{ user.username }} logout</a>
+                    </li>
+                     {% else %}
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'login' %}">log in</a>
+                    </li>
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'register' %}">sign up</a>
+                    </li>
+              {% endif %}
+
+
         </ul>
       </div>
     </div>

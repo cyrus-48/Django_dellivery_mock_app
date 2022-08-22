@@ -1,5 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import *
+from django.contrib.auth.models import User
 
 
 # class PizzaForm(forms.Form):
@@ -15,3 +18,9 @@ class PizzaForm(forms.ModelForm):
 
 class MultiplePizzasForm(forms.Form):
     number = forms.IntegerField(min_value=2, max_value=8)
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User ;
+        fields = [ 'username' , 'email' , 'password1', 'password2']
+

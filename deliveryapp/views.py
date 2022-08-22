@@ -1,15 +1,20 @@
 from django.forms import formset_factory
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Pizza
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from deliveryapp.forms import PizzaForm, MultiplePizzasForm
+from deliveryapp.forms import PizzaForm, MultiplePizzasForm, CreateUserForm
 
 
 def home(request):
     return render(request, 'pizza/home.html', {})
 
 
+@login_required(login_url='login')
 def order(request):
     multiple_form = MultiplePizzasForm()
     if request.method == "POST":
@@ -36,6 +41,7 @@ def order(request):
         return render(request, 'pizza/order.html', {'pizzaForm': form, 'multiple_form': multiple_form, })
 
 
+@login_required(login_url='login')
 def pizzas(request):
     number_of_pizzas = 2
     filled_multiple_pizza_form = MultiplePizzasForm(request.GET)
@@ -57,6 +63,7 @@ def pizzas(request):
         return render(request, 'pizza/pizza.html', {'formset': formset})
 
 
+@login_required(login_url='login')
 def edit_order(request, pk):
     pizza = Pizza.objects.get(pk=pk)
     form = PizzaForm(instance=pizza)
@@ -66,5 +73,51 @@ def edit_order(request, pk):
             filled_form.save()
             form = filled_form
             note = "order has been updated"
-            return render(request, 'pizza/edit_order.html', {'note':note,'pizzaform': form, 'pizza': pizza})
-    return render(request , 'pizza/edit_order.html',{'pizzaform':form,'pizza':pizza})
+            return render(request, 'pizza/edit_order.html', {'note': note, 'pizzaform': form, 'pizza': pizza})
+    return render(request, 'pizza/edit_order.html', {'pizzaform': form, 'pizza': pizza})
+
+
+@login_required(login_url='login')
+def orders(request):
+    orders = Pizza.objects.all()
+    filtered_orders = orders.filter(user=7)
+    context = {
+        'orders': filtered_orders
+    }
+    return render(request, 'pizza/orders.html', context)
+
+
+def loginUser(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password')
+        user = authenticate(request, username=username, password=password1)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'username or password is incorrect')
+            return redirect('home')
+
+    context = {}
+    return render(request, 'pizza/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+
+def register(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
+            return redirect('login')
+    context = {
+        'form': form
+    }
+    return render(request, 'pizza/register.html', context)

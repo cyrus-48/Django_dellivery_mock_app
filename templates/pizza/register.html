@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Register to pizza cafe </title>
+   </head>
+<body>
+  <div class="container">
+    <div class="title">Create account </div>
+      <div class="title">{{ form.errors }} </div>
+     {% for messege in messages %}
+         <p> {{ message  }}</p>
+      {% endfor %}
+    <div class="content">
+      <form action="#" method="POST">
+           {%  csrf_token %}
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Username </span>
+             {{ form.username }}
+          </div>
+
+          <div class="input-box">
+            <span class="details">Email</span>
+           {{ form.email }}
+          </div>
+
+          <div class="input-box">
+            <span class="details">Password</span>
+              {{ form.password1 }}
+          </div>
+          <div class="input-box">
+            <span class="details">Confirm Password</span>
+           {{ form.password2 }}
+          </div>
+        </div>
+
+        <div class="button">
+          <input type="submit" value="Register">
+        </div>
+             <div class="input-box">
+            <p> already have an account <a href="{% url 'login' %}">log in</a> </p>
+          </div>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>

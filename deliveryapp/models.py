@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -13,6 +14,7 @@ class Pizza(models.Model):
     topping1 = models.CharField(max_length=100)
     topping2 = models.CharField(max_length=100)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
 
     def __str__(self):
         return self.topping1
