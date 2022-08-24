@@ -1,5 +1,8 @@
 from django.forms import formset_factory
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from .models import Pizza
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -18,13 +21,13 @@ def home(request):
 def order(request):
     multiple_form = MultiplePizzasForm()
     if request.method == "POST":
-
         filled_form = PizzaForm(request.POST)
 
         if filled_form.is_valid():
+            filled_form.instance.user = request.user
             created_pizza = filled_form.save()
             created_pizza_pk = created_pizza.id
-            note = "Thank you for ordering %s %s and %s pizza on the way" % (filled_form.cleaned_data['size'],
+            note = "Thank you for ordering %s %s and %s , your pizza is  on the way" % (filled_form.cleaned_data['size'],
                                                                              filled_form.cleaned_data['topping1'],
                                                                              filled_form.cleaned_data['topping2'],)
             new_form = PizzaForm()
@@ -52,6 +55,7 @@ def pizzas(request):
     if request.method == 'POST':
         filled_formset = pizza_form_set(request.POST)
         if filled_formset.is_valid():
+
             for form in filled_formset:
                 print(form.cleaned_data['topping1'])
             note = "pizzas have been ordered"
@@ -80,7 +84,7 @@ def edit_order(request, pk):
 @login_required(login_url='login')
 def orders(request):
     orders = Pizza.objects.all()
-    filtered_orders = orders.filter(user=7)
+    filtered_orders = orders.filter(user=request.user)
     context = {
         'orders': filtered_orders
     }
@@ -94,10 +98,18 @@ def loginUser(request):
         user = authenticate(request, username=username, password=password1)
         if user is not None:
             login(request, user)
+            note = " Login successful"
+            context ={
+                'note':note
+            }
             return redirect('home')
         else:
             messages.info(request, 'username or password is incorrect')
-            return redirect('home')
+            note = "Incorrect username or password"
+            context = {
+                'note': note
+            }
+            return render(request, 'pizza/login.html', context)
 
     context = {}
     return render(request, 'pizza/login.html', context)
@@ -121,3 +133,9 @@ def register(request):
         'form': form
     }
     return render(request, 'pizza/register.html', context)
+
+
+def deleteorder(request, pk):
+    orders = Pizza.objects.get(id=pk)
+    orders.delete()
+    return HttpResponseRedirect(reverse('orders'))

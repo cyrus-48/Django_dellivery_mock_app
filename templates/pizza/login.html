@@ -14,7 +14,9 @@
     <div class="content">
       <form action="{% url 'login' %}" method="POST">
           {% csrf_token %}
+         <h5 style="color: red">{{ note }}</h5>
         <div class="user-details">
+
 
 
           <div class="input-box">

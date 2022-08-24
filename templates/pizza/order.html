@@ -2,12 +2,12 @@
 {% block content %}
   {% load widget_tweaks %}
   <div class="container">
-  <h1> order a pizza here</h1>
-<h3>{{ note }}</h3>
+  <h4 style="color: #f5dd5d"> order a pizza here</h4>
+<h6>{{ note }}</h6>
 {% if created_pizza_pk %}
-<a href="{% url 'edit_order' created_pizza_pk %}">Edit your order</a>
+<a href="{% url 'edit_order' created_pizza_pk %}"   class = "btn btn-primary" >Edit your order</a>
 {% endif %}
-<form  action="{% url 'order' %}" method="POST">
+<form  action="{% url 'order' %}" method="POST" style="margin: 1rem">
     {% csrf_token %}
     {%for field in pizzaForm %}
         <div class="form-group">
@@ -17,15 +17,10 @@
         </div>
     {% endfor %}
 
-    <input type="submit" value="order">
+    <input type="submit" value="order" class="btn btn-primary">
 </form>
 <br><br>
-want more than one pizza?
-<form action="{% url 'pizzas' %}" method = "GET">
-    {{ multiple_form }}
-    <input type="submit" value="get pizzas">
 
-</form>
   </div>
 {% endblock %}
 

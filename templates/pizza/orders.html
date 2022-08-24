@@ -6,17 +6,17 @@
     <div class="container">
   <div class="row">
         {% for order in orders %}
-      <div class="card" style="width: 18rem;">
+      <div class="card" style="width: 18rem;margin: 1rem">
   <div class="card-body" style="align-content: center">
-    <h5 class="card-title">order {{ order.id }}</h5>
+    <h5 class="card-title" style="margin-left: 20px;color: #1d1f1d"> {{ order.user }}'s  order</h5>
 
-           <p class="card-text">order id : {{ order.id }}</p>
-           <p class="card-text">Topping 1:{{ order.topping1 }}</p>
-           <p class="card-text">Topping 2:{{ order.topping2 }}</p>
-           <p class="card-text">Size     :{{ order.size }}</p>
-       <p class="card-text">USER    :{{ order.user }}</p>
+           <p class="card-text" style="color: #1d1f1d">order id :<span style="color: #1c4a06"> {{ order.id }}</span> </p>
+           <p class="card-text" style="color: #1d1f1d">Topping 1:<span style="color: #1c4a06"> {{ order.topping1}}</span></p>
+           <p class="card-text" style="color: #1d1f1d">Topping 2:<span style="color: #1c4a06"> {{ order.topping2}}</span></p>
+           <p class="card-text" style="color: #1d1f1d">Size     :<span style="color: #1c4a06"> {{ order.size }}</span></p>
 
-    <a href="{% url 'order' %}" class="btn btn-primary">Details</a>
+
+    <a href="{% url 'delete' order.id %}" class="btn btn-primary" style="margin: 10px">Delete</a>
   </div>
 </div>
          {% endfor %}
@@ -24,7 +24,9 @@
 
     </div>
 
+
   </div>
+     <a href="{% url 'order' %}" class="btn btn-primary">Order more </a>
 </div>
 
 
