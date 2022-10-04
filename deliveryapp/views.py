@@ -27,9 +27,10 @@ def order(request):
             filled_form.instance.user = request.user
             created_pizza = filled_form.save()
             created_pizza_pk = created_pizza.id
-            note = "Thank you for ordering %s %s and %s , your pizza is  on the way" % (filled_form.cleaned_data['size'],
-                                                                             filled_form.cleaned_data['topping1'],
-                                                                             filled_form.cleaned_data['topping2'],)
+            note = "Thank you for ordering %s %s and %s , your pizza is  on the way" % (
+            filled_form.cleaned_data['size'],
+            filled_form.cleaned_data['topping1'],
+            filled_form.cleaned_data['topping2'],)
             new_form = PizzaForm()
             context = {
                 'pizzaForm': new_form,
@@ -99,8 +100,8 @@ def loginUser(request):
         if user is not None:
             login(request, user)
             note = " Login successful"
-            context ={
-                'note':note
+            context = {
+                'note': note
             }
             return redirect('home')
         else:
