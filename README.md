@@ -10,3 +10,14 @@ A simple mock  application built with django, for ordering pizza
         1. authenticated user can view and delete orders 
 
 # images 
+## Desktop view
+![Alt Text](thumbnails/1.png)
+![Alt Text](thumbnails/2.png)
+![Alt Text](thumbnails/3.png)
+![Alt Text](thumbnails/4.png)
+![Alt Text](thumbnails/5.png)
+![Alt Text](thumbnails/6.png)
+## mobile view
+![Alt Text](thumbnails/7.png)
+![Alt Text](thumbnails/8.png)
+![Alt Text](thumbnails/9.png)
