@@ -11,6 +11,7 @@ A simple mock  application built with django, for ordering pizza
 
 # images 
 ## Desktop view
+###  Authentication
 ![Alt Text](thumbnails/1.png)
 ![Alt Text](thumbnails/2.png)
 ![Alt Text](thumbnails/3.png)
