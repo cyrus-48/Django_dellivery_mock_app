@@ -2,12 +2,16 @@
 {% load static %}
 
 {% block content  %}
+      {% if  orders.count == 0 %}
+    <h3> You have no orders yet</h3>
+     {% else %}
     <h3> Your current orders</h3>
     <div class="container">
-  <div class="row">
+   <div class="row">
+
         {% for order in orders %}
       <div class="card" style="width: 18rem;margin: 1rem">
-  <div class="card-body" style="align-content: center">
+   <div class="card-body" style="align-content: center">
     <h5 class="card-title" style="margin-left: 20px;color: #1d1f1d"> {{ order.user }}'s  order</h5>
 
            <p class="card-text" style="color: #1d1f1d">order id :<span style="color: #1c4a06">{{ order.id }}</span> </p>
@@ -25,9 +29,11 @@
     </div>
 
 
+
   </div>
      <a href="{% url 'order' %}" class="btn btn-primary">Order more </a>
 </div>
 
-
+{% endif %}
+     <a href="{% url 'order' %}" class="btn btn-primary">Order more </a>
 {%  endblock %}

@@ -1,9 +1,10 @@
+from multiprocessing import context
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import Pizza
+from .models import Pizza, User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -28,9 +29,9 @@ def order(request):
             created_pizza = filled_form.save()
             created_pizza_pk = created_pizza.id
             note = "Thank you for ordering %s %s and %s , your pizza is  on the way" % (
-            filled_form.cleaned_data['size'],
-            filled_form.cleaned_data['topping1'],
-            filled_form.cleaned_data['topping2'],)
+                filled_form.cleaned_data['size'],
+                filled_form.cleaned_data['topping1'],
+                filled_form.cleaned_data['topping2'],)
             new_form = PizzaForm()
             context = {
                 'pizzaForm': new_form,
@@ -140,3 +141,17 @@ def deleteorder(request, pk):
     orders = Pizza.objects.get(id=pk)
     orders.delete()
     return HttpResponseRedirect(reverse('orders'))
+def oder_details(request , pk):
+    order_details = Pizza.objects.get(pk =id)
+    context = {
+        'details' : oder_details
+
+    }
+    return render(request)
+def profile(request):
+    profile_details = User.objects.get(id)
+    context = {
+        'user': profile_details
+    }
+    return render(request, 'pizza/base.html', context)
+
